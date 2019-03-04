@@ -1,14 +1,13 @@
 package cmpe273.group6.autogarden;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
 @RequestMapping("/areas")
 public class AreaController {
+
     private AreaRepository areaRepository;
 
     public AreaController(AreaRepository areaRepository) {
@@ -21,4 +20,21 @@ public class AreaController {
 
         return areas;
     }
+
+    @PutMapping
+    public void insert(@RequestBody Area area) {
+        this.areaRepository.insert(area);
+    }
+
+    @PostMapping
+    public void update(@RequestBody Area area) {
+        this.areaRepository.save(area);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") String id) {
+        this.areaRepository.delete(areaRepository.findAreaById(id));
+    }
+
+
 }

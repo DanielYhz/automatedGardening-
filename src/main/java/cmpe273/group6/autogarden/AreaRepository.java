@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AreaRepository extends MongoRepository<Area,String> {
+     Area findAreaById(String id);
 
 }
