@@ -1,5 +1,6 @@
 package cmpe273.group6.autogarden;
 
+import cmpe273.group6.Service.AreaRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +11,7 @@ import java.util.*;
 public class DbSeeder implements CommandLineRunner {
     // if we want to start the database clean each time,
     // add a reference
-    private  AreaRepository areaRepository;
+    private AreaRepository areaRepository;
 
     public DbSeeder(AreaRepository areaRepository) {
         this.areaRepository = areaRepository;

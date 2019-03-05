@@ -1,5 +1,7 @@
-package cmpe273.group6.autogarden;
+package cmpe273.group6.Controller;
 
+import cmpe273.group6.Entity.Area;
+import cmpe273.group6.Service.AreaRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -17,7 +19,6 @@ public class AreaController {
     @GetMapping("/all")
     public List<Area> getAll() {
         List<Area> areas = this.areaRepository.findAll();
-
         return areas;
     }
 
@@ -36,5 +37,9 @@ public class AreaController {
         this.areaRepository.delete(areaRepository.findAreaById(id));
     }
 
-
+    @GetMapping("/{id}")
+    public Area getById(@PathVariable("id") String id) {
+        Area area = this.areaRepository.findAreaById(id);
+        return area;
+    }
 }

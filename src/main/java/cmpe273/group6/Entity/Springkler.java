@@ -1,4 +1,4 @@
-package cmpe273.group6.autogarden;
+package cmpe273.group6.Entity;
 
 import com.mongodb.internal.connection.Time;
 import org.springframework.data.annotation.Id;
