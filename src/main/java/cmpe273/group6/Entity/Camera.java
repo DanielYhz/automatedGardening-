@@ -8,7 +8,6 @@ public class Camera {
     @Id
     private String id;
     private int access_mode;
-    private boolean detection;
     private boolean state;
 
     protected Camera() {
@@ -18,7 +17,6 @@ public class Camera {
     public Camera(String id, int access_mode) {
         this.id = id;
         this.access_mode = access_mode;
-        this.detection = false;
         this.state = true;
     }
 
@@ -36,14 +34,6 @@ public class Camera {
 
     public void setAccess_mode(int access_mode) {
         this.access_mode = access_mode;
-    }
-
-    public boolean isDetection() {
-        return detection;
-    }
-
-    public void setDetection(boolean detection) {
-        this.detection = detection;
     }
 
     public boolean isState() {
