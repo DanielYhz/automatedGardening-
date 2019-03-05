@@ -1,5 +1,6 @@
 package cmpe273.group6.autogarden;
 
+import cmpe273.group6.Entity.Area;
 import cmpe273.group6.Service.AreaRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
