@@ -16,8 +16,7 @@ public class User {
     protected User() {
     }
 
-    public User(String id, String username, String password, int room_num, Boolean admin) {
-        this.id = id;
+    public User(String username, String password, int room_num, Boolean admin) {
         this.username = username; 
         this.password = password;
         this.room_num = room_num;
