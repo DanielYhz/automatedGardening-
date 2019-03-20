@@ -5,8 +5,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SensorRepository extends MongoRepository <Sensor, String> {
-        Sensor findSensorById(String id);
+public interface SensorRepository extends MongoRepository <Sensor, Long> {
+        Sensor findSensorById(long id);
 }
 
 

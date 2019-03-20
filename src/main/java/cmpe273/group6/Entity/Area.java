@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Area {
     @Id
     private String id;
+
     private int[] plant;
     private int sprinkler;
     private int camera;
@@ -22,6 +23,10 @@ public class Area {
         this.sprinkler = sprinkler;
         this.camera = camera;
         this.sensor = sensor;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int[] getPlant() {

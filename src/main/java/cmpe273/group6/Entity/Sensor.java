@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Sensor")
 public class Sensor {
     @Id
-    private String id;
+    private long id;
     private int access_mode;
     private boolean state;
 
@@ -14,17 +14,17 @@ public class Sensor {
 
     }
 
-    public Sensor(String id, int access_mode) {
+    public Sensor(long id, int access_mode) {
         this.id = id;
         this.access_mode = access_mode;
         this.state = true;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
