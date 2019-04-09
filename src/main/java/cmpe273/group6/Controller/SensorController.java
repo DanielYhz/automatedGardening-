@@ -52,7 +52,7 @@ public class SensorController {
         return sensor;
     }
 
-    @PostMapping("/registration/{id}")
+    @PostMapping("/register/{id}")
     public String registerSensor(@PathVariable("id") long id) {
 //        URLConnection server = null;
 //        String sensor_id = "";
