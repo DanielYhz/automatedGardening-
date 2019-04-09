@@ -4,6 +4,7 @@ import cmpe273.group6.Entity.Sensor;
 import cmpe273.group6.Service.SensorRepository;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/sensors")
@@ -91,10 +93,28 @@ public class SensorController {
         return "Deregister successfully";
     }
 
-//    @PostMapping("/update/{id}")
-//    public String updateSensor(@PathVariable("id") long id) {
+    @PostMapping("/update/{id}")
+    public String updateSensor(@PathVariable("id") long id, @RequestBody Map<String, String> map
+                               ) {
+
+//        Sensor sensor = sensorRepository.findSensorById(sensorDetails.getId());
 //
-//    }
+//        sensor.setAccess_mode(sensorDetails.getAccess_mode());
+//
+//        sensor.setState(sensorDetails.getState());
+
+        System.out.println(id);
+        for (String key : map.keySet()) {
+            System.out.println(key + ":" + map.get(key));
+        }
+
+
+        if (id == 6) {
+            return "Update Succeed";
+        } else {
+            return "hello";
+        }
+    }
 }
 
 
