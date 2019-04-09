@@ -116,6 +116,20 @@ public class SensorController {
         this.sensorRepository.save(sensor);
         return "Update succeed!";
     }
+
+    @PostMapping("/observe/{id}")
+    public String observe(@PathVariable(value = "id") long sensorId, @RequestBody Map<String, String> map) {
+        if (sensorRepository.findSensorById(sensorId) == null) {
+            return "The device is not being registered, please check!";
+        }
+
+        Sensor sensor = sensorRepository.findSensorById(sensorId);
+        if (map.containsKey("observe")) {
+            sensor.setObserve(Boolean.parseBoolean(map.get("observe")));
+        }
+        this.sensorRepository.save(sensor);
+        return "Observe on";
+    }
 }
 
 
