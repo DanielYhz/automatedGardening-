@@ -41,8 +41,9 @@ public class SensorController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") long id) {
+    public String delete(@PathVariable("id") long id) {
         this.sensorRepository.delete(sensorRepository.findSensorById(id));
+        return "Delete Succeed";
     }
 
     @GetMapping("/{id}")
