@@ -9,6 +9,7 @@ public class Sensor {
     private long id;
     private int access_mode;
     private boolean state;
+    private boolean observe;
 
     protected Sensor() {
 
@@ -21,6 +22,7 @@ public class Sensor {
         // Default is 2;
         this.access_mode = 2;
         this.state = true;
+        this.observe = false;
     }
 
     public long getId() {
@@ -49,5 +51,13 @@ public class Sensor {
 
     public boolean getState() {
         return this.state;
+    }
+
+    public boolean isObserve() {
+        return observe;
+    }
+
+    public void setObserve(boolean observe) {
+        this.observe = observe;
     }
 }

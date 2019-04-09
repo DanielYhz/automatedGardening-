@@ -96,11 +96,23 @@ public class SensorController {
 
     @PostMapping("/update/{id}")
     public String updateSensor(@PathVariable("id") long id, @RequestBody Map<String, String> map) {
-        
-        Sensor sensor = sensorRepository.findSensorById(id);
-        sensor.setAccess_mode(Integer.parseInt(map.get("access_mode")));
+        if (sensorRepository.findSensorById(id) == null) {
+            return "The device is not being registered, please check!";
+        }
 
-        sensor.setState(Boolean.parseBoolean("state"));
+        Sensor sensor = sensorRepository.findSensorById(id);
+        if (map.containsKey("sensor_id")) {
+            sensor.setId(Long.parseLong(map.get("sensor_id")));
+        }
+
+        if (map.containsKey("state")) {
+            sensor.setState(Boolean.parseBoolean(map.get("state")));
+        }
+
+        if (map.containsKey("access_mode")) {
+            sensor.setAccess_mode(Integer.parseInt(map.get("access_mode")));
+        }
+
         this.sensorRepository.save(sensor);
         return "Update succeed!";
     }
