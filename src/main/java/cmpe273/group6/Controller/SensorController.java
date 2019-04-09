@@ -129,7 +129,11 @@ public class SensorController {
             sensor.setObserve(Boolean.parseBoolean(map.get("observe")));
         }
         this.sensorRepository.save(sensor);
-        return "Observe on";
+        if (Boolean.parseBoolean(map.get("observe"))) {
+            return "Observe on";
+        } else {
+            return "Observe off";
+        }
     }
 }
 
