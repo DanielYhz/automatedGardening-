@@ -2,6 +2,7 @@ package cmpe273.group6.Controller;
 
 import cmpe273.group6.Entity.Sensor;
 import cmpe273.group6.Service.SensorRepository;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -80,7 +81,7 @@ public class SensorController {
 //            this.sensorRepository.save(sensor);
 //        }
         // 0 Stands for R, 1 Stands for W, 2 Stands for RW
-        Sensor sensor = new Sensor(id, 0);
+        Sensor sensor = new Sensor(id);
 
         sensorRepository.save(sensor);
         return "Registration Complete";
@@ -94,26 +95,14 @@ public class SensorController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateSensor(@PathVariable("id") long id, @RequestBody Map<String, String> map
-                               ) {
+    public String updateSensor(@PathVariable("id") long id, @RequestBody Map<String, String> map) {
+        
+        Sensor sensor = sensorRepository.findSensorById(id);
+        sensor.setAccess_mode(Integer.parseInt(map.get("access_mode")));
 
-//        Sensor sensor = sensorRepository.findSensorById(sensorDetails.getId());
-//
-//        sensor.setAccess_mode(sensorDetails.getAccess_mode());
-//
-//        sensor.setState(sensorDetails.getState());
-
-        System.out.println(id);
-        for (String key : map.keySet()) {
-            System.out.println(key + ":" + map.get(key));
-        }
-
-
-        if (id == 6) {
-            return "Update Succeed";
-        } else {
-            return "hello";
-        }
+        sensor.setState(Boolean.parseBoolean("state"));
+        this.sensorRepository.save(sensor);
+        return "Update succeed!";
     }
 }
 
