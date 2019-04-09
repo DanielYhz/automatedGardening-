@@ -135,6 +135,19 @@ public class SensorController {
             return "Observe off";
         }
     }
+
+    @PostMapping("/notify/{id}")
+    public String notify(@PathVariable(value = "id") long sensorId, @RequestBody Map<String, String> map) {
+        if (sensorRepository.findSensorById(sensorId) == null) {
+            return "The device is not being registered, please check!";
+        }
+
+        Sensor sensor = sensorRepository.findSensorById(sensorId);
+        if (map.containsKey("message")) {
+            System.out.println(map.get("message"));
+        }
+        return "Notified server";
+    }
 }
 
 
