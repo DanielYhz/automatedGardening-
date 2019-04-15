@@ -45,5 +45,33 @@ public class AreaController {
         return area;
     }
 
+    @PutMapping("/setup/{id}")
+    public String setupArea(@PathVariable(value = "id") long areaId, @RequestBody Map<String, String> map) {
+        if (areaRepository.findAreaById(areaId) == null) {
+            return "This area does not exist.";
+        }
 
+        Area area = areaRepository.findAreaById(areaId);
+        if (map.containsKey("sprinkler")) {
+            area.setSprinkler(Long.parseLong(map.get("sprinkler")));
+        }
+
+        if (map.containsKey("sensor")) {
+            area.setSensor(Long.parseLong(map.get("sensor")));
+        }
+
+        if (map.containsKey("camera")) {
+            area.setCamera(Long.parseLong(map.get("camera")));
+        }
+
+        if (map.containsKey("plant_category")) {
+            if (!area.getPlant_num().keySet().contains(map.get("plant_category")) && !map.containsKey("plant_num")) {
+                area.getPlant_num().put(map.get("plant_category"), 0);
+            } else {
+                area.getPlant_num().put(map.get("plant_category"), Integer.parseInt(map.get("plant_num")));
+            }
+        }
+        this.areaRepository.save(area);
+        return "Information updated on the Area " + areaId + " succeed.";
+    }
 }

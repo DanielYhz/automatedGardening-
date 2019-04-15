@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document (collection = "Sprinkler")
 public class Sprinkler {
     @Id
-    private String id;
+    private long id;
     private Time schedule_start;
     private Time schedule_end;
     private boolean state;
@@ -16,18 +16,18 @@ public class Sprinkler {
 
     }
 
-    public Sprinkler(String id, Time schedule_start, Time schedule_end) {
+    public Sprinkler(long id, Time schedule_start, Time schedule_end) {
         this.id = id;
         this.schedule_end = schedule_end;
         this.schedule_start = schedule_start;
         this.state = true;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -13,32 +13,22 @@ public class Area {
     @Id
     private long id;
 
-    private List<String> plant;
     private Map<String, Integer> plant_num;
     private long sprinkler;
     private long camera;
     private long sensor;
 
     protected Area() {
-
+        this.plant_num = new HashMap<>();
     }
 
     public Area(long id) {
         this.id = id;
-        this.plant = new ArrayList<>();
         this.plant_num = new HashMap<>();
     }
 
     public long getId() {
         return id;
-    }
-
-    public List<String> getPlant() {
-        return plant;
-    }
-
-    public void setPlant(List<String> plant) {
-        this.plant = plant;
     }
 
     public Map<String, Integer> getPlant_num() {
@@ -53,7 +43,7 @@ public class Area {
         return sprinkler;
     }
 
-    public void setSprinkler(int sprinkler) {
+    public void setSprinkler(long sprinkler) {
         this.sprinkler = sprinkler;
     }
 
@@ -61,7 +51,7 @@ public class Area {
         return camera;
     }
 
-    public void setCamera(int camera) {
+    public void setCamera(long camera) {
         this.camera = camera;
     }
 
@@ -69,7 +59,7 @@ public class Area {
         return sensor;
     }
 
-    public void setSensor(int sensor) {
+    public void setSensor(long sensor) {
         this.sensor = sensor;
     }
 }
