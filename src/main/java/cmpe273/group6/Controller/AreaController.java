@@ -23,8 +23,10 @@ public class AreaController {
     }
 
     @PutMapping
-    public void insert(@RequestBody Area area) {
+    public String insert(@RequestBody Area area) {
+
         this.areaRepository.insert(area);
+        return "Insert complete";
     }
 
     @PostMapping
@@ -33,13 +35,15 @@ public class AreaController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") String id) {
+    public void delete(@PathVariable("id") long id) {
         this.areaRepository.delete(areaRepository.findAreaById(id));
     }
 
     @GetMapping("/{id}")
-    public Area getById(@PathVariable("id") String id) {
+    public Area getById(@PathVariable("id") long id) {
         Area area = this.areaRepository.findAreaById(id);
         return area;
     }
+
+
 }

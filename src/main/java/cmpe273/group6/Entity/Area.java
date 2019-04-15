@@ -3,41 +3,53 @@ package cmpe273.group6.Entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Document(collection = "Area")
 public class Area {
     @Id
-    private String id;
+    private long id;
 
-    private int[] plant;
-    private int sprinkler;
-    private int camera;
-    private int sensor;
+    private List<String> plant;
+    private Map<String, Integer> plant_num;
+    private long sprinkler;
+    private long camera;
+    private long sensor;
 
     protected Area() {
-        // plant contains: category (int),
-        // number of plant in this area.
-        this.plant = new int[2];
+
     }
 
-    public Area(int sprinkler, int camera, int sensor) {
-        this.sprinkler = sprinkler;
-        this.camera = camera;
-        this.sensor = sensor;
+    public Area(long id) {
+        this.id = id;
+        this.plant = new ArrayList<>();
+        this.plant_num = new HashMap<>();
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public int[] getPlant() {
+    public List<String> getPlant() {
         return plant;
     }
 
-    public void setPlant(int[] plant) {
+    public void setPlant(List<String> plant) {
         this.plant = plant;
     }
 
-    public int getSprinkler() {
+    public Map<String, Integer> getPlant_num() {
+        return plant_num;
+    }
+
+    public void setPlant_num(Map<String, Integer> plant_num) {
+        this.plant_num = plant_num;
+    }
+
+    public long getSprinkler() {
         return sprinkler;
     }
 
@@ -45,7 +57,7 @@ public class Area {
         this.sprinkler = sprinkler;
     }
 
-    public int getCamera() {
+    public long getCamera() {
         return camera;
     }
 
@@ -53,7 +65,7 @@ public class Area {
         this.camera = camera;
     }
 
-    public int getSensor() {
+    public long getSensor() {
         return sensor;
     }
 

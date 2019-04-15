@@ -4,19 +4,19 @@ import com.mongodb.internal.connection.Time;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document (collection = "Springkler")
-public class Springkler {
+@Document (collection = "Sprinkler")
+public class Sprinkler {
     @Id
     private String id;
     private Time schedule_start;
     private Time schedule_end;
     private boolean state;
 
-    protected Springkler() {
+    protected Sprinkler() {
 
     }
 
-    public Springkler(String id, Time schedule_start, Time schedule_end) {
+    public Sprinkler(String id, Time schedule_start, Time schedule_end) {
         this.id = id;
         this.schedule_end = schedule_end;
         this.schedule_start = schedule_start;

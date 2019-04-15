@@ -54,33 +54,6 @@ public class SensorController {
 
     @PostMapping("/register/{id}")
     public String registerSensor(@PathVariable("id") long id) {
-//        URLConnection server = null;
-//        String sensor_id = "";
-//        try {
-//            URL url = new URL("http://localhost:8090");
-//            server = url.openConnection();
-//
-//            BufferedReader in = new BufferedReader(new InputStreamReader(
-//                    server.getInputStream()));
-//
-//            StringBuilder sb = new StringBuilder();
-//            for (int c; (c = in.read()) >= 0; )
-//                sb.append((char) c);
-//            sensor_id = sb.toString();
-//            System.out.println(sensor_id);
-//            in.close();
-//            ;
-//        } catch (MalformedURLException e) {
-//            //bad  URL, tell the user
-//        } catch (IOException e) {
-//            //network error/ tell the user
-//        }
-//        if (sensorRepository.findSensorById(id).getId() != null) {
-//            System.out.println("Already registered");
-//        } else {
-//            Sensor sensor = new Sensor(id, 0);
-//            this.sensorRepository.save(sensor);
-//        }
         // 0 Stands for R, 1 Stands for W, 2 Stands for RW
         Sensor sensor = new Sensor(id);
 
@@ -118,6 +91,7 @@ public class SensorController {
         return "Update succeed!";
     }
 
+    // observation mode on/off
     @PostMapping("/observe/{id}")
     public String observe(@PathVariable(value = "id") long sensorId, @RequestBody Map<String, String> map) {
         if (sensorRepository.findSensorById(sensorId) == null) {
@@ -136,6 +110,7 @@ public class SensorController {
         }
     }
 
+    // get the notification from the device
     @PostMapping("/notify/{id}")
     public String notify(@PathVariable(value = "id") long sensorId, @RequestBody Map<String, String> map) {
         if (sensorRepository.findSensorById(sensorId) == null) {
