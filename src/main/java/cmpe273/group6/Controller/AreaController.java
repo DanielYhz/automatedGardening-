@@ -3,10 +3,7 @@ package cmpe273.group6.Controller;
 import cmpe273.group6.Entity.Area;
 import cmpe273.group6.Entity.Category;
 import cmpe273.group6.Entity.Sprinkler;
-import cmpe273.group6.Service.AreaRepository;
-import cmpe273.group6.Service.CategoryRepository;
-import cmpe273.group6.Service.SensorRepository;
-import cmpe273.group6.Service.SprinklerRepository;
+import cmpe273.group6.Service.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -23,12 +20,16 @@ public class AreaController {
 
     private SprinklerRepository sprinklerRepository;
 
-    public AreaController(AreaRepository areaRepository, CategoryRepository categoryRepository, SensorRepository sensorRepository, SprinklerRepository sprinklerRepository) {
+    private CameraRepository cameraRepository;
+
+    public AreaController(AreaRepository areaRepository, CategoryRepository categoryRepository,
+                          SensorRepository sensorRepository, SprinklerRepository sprinklerRepository, CameraRepository cameraRepository) {
 
         this.areaRepository = areaRepository;
         this.categoryRepository = categoryRepository;
         this.sensorRepository = sensorRepository;
         this.sprinklerRepository = sprinklerRepository;
+        this.cameraRepository = cameraRepository;
     }
 
 
@@ -57,8 +58,7 @@ public class AreaController {
 
     @GetMapping("/{id}")
     public Area getById(@PathVariable("id") long id) {
-        Area area = this.areaRepository.findAreaById(id);
-        return area;
+        return this.areaRepository.findAreaById(id);
     }
 
     @PutMapping("/setup/{id}")
@@ -90,7 +90,7 @@ public class AreaController {
 
         // since we will only update one category at a time. there will be only one type of plant added here.
         if (categoryRepository.findCategoryByNameIs(map.get("plant_category")) == null) {
-            return "No such category in the database. Please add first.";
+            return "No such plant category in the database. Please add first. Ignore if you do not want to add.";
         } else {
             Category category = categoryRepository.findCategoryByNameIs(map.get("plant_category"));
             area.setSunlight_threshold(area.getSunlight_threshold() + category.getSunlight() * Integer.parseInt(map.get("plant_num")));
@@ -127,6 +127,39 @@ public class AreaController {
                 return "Sprinkler turned off. " + sprinkler.getId();
             } else {
                 return "water still needed";
+            }
+        }
+    }
+
+    @PostMapping("/detect/{id}")
+    public String detectPeople(@PathVariable(value = "id") long cameraId, @RequestBody Map<String, String> map) {
+        if (cameraRepository.findCameraById(cameraId) == null) {
+            return "The camera is not being registered.";
+        } else if (areaRepository.findAreaByCameraIs(cameraId) == null) {
+            return "The camera is not being added to any area.";
+        } else {
+            Area area = areaRepository.findAreaByCameraIs(cameraId);
+            if (map.containsKey("detect")) {
+                // detect people, turn off
+                if (Integer.parseInt(map.get("detect")) == 1) {
+                    if (sprinklerRepository.findSprinklerById(area.getSprinkler()) == null) {
+                        return "There is no sprinkler in this area";
+                    }
+                    Sprinkler sprinkler = sprinklerRepository.findSprinklerById(area.getSprinkler());
+                    sprinkler.setState(0);
+                    sprinklerRepository.save(sprinkler);
+                    return "Sprinkler turned off. " + sprinkler.getId();
+                } else {
+                    if (sprinklerRepository.findSprinklerById(area.getSprinkler()) == null) {
+                        return "There is no sprinkler in this area";
+                    }
+                    Sprinkler sprinkler = sprinklerRepository.findSprinklerById(area.getSprinkler());
+                    sprinkler.setState(1);
+                    sprinklerRepository.save(sprinkler);
+                    return "Sprinkler turned on. " + sprinkler.getId();
+                }
+            } else {
+                return "need more information";
             }
         }
     }

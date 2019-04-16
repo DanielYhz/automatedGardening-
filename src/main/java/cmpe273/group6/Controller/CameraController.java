@@ -17,8 +17,8 @@ public class CameraController {
 
     @GetMapping("/all")
     public List<Camera> getAll() {
-        List<Camera> sensors = this.cameraRepository.findAll();
-        return sensors;
+        List<Camera> cameras = this.cameraRepository.findAll();
+        return cameras;
     }
 
     @PutMapping
@@ -32,13 +32,22 @@ public class CameraController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") String id) {
+    public void delete(@PathVariable("id") long id) {
         this.cameraRepository.delete(cameraRepository.findCameraById(id));
     }
 
     @GetMapping("/{id}")
-    public Camera getById(@PathVariable("id") String id) {
+    public Camera getById(@PathVariable("id") long id) {
         Camera camera = this.cameraRepository.findCameraById(id);
         return camera;
+    }
+
+    @PostMapping("/register/{id}")
+    public String registerCamera(@PathVariable("id") long id) {
+        // 0 Stands for R, 1 Stands for W, 2 Stands for RW
+        Camera camera = new Camera(id);
+
+        cameraRepository.save(camera);
+        return "Registration Complete";
     }
 }

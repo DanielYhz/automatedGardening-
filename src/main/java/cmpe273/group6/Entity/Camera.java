@@ -14,9 +14,9 @@ public class Camera {
 
     }
 
-    public Camera(long id, int access_mode) {
+    public Camera(long id) {
         this.id = id;
-        this.access_mode = access_mode;
+        this.access_mode = 2;
         this.state = 1;
     }
 

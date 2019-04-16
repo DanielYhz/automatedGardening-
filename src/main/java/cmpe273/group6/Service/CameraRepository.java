@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CameraRepository extends MongoRepository <Camera,String> {
-    Camera findCameraById(String id);
+public interface CameraRepository extends MongoRepository <Camera,Long> {
+    Camera findCameraById(long id);
 }

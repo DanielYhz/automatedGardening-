@@ -10,4 +10,5 @@ import java.util.*;
 public interface AreaRepository extends MongoRepository<Area,Long> {
      Area findAreaById(long id);
      Area findAreaBySensorIs(long id);
+     Area findAreaByCameraIs(long id);
 }
