@@ -32,13 +32,13 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") String id) {
-        this.categoryRepository.delete(categoryRepository.findCameraById(id));
+    public void delete(@PathVariable("id") long id) {
+        this.categoryRepository.delete(categoryRepository.findCategoryById(id));
     }
 
     @GetMapping("/{id}")
-    public Category getById(@PathVariable("id") String id) {
-        Category category = this.categoryRepository.findCameraById(id);
+    public Category getById(@PathVariable("id") long id) {
+        Category category = this.categoryRepository.findCategoryById(id);
         return category;
     }
 }

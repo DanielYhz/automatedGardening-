@@ -1,33 +1,15 @@
-package cmpe273.group6.Entity;
+package cmpe273.group6.Service.CategoryRepositoryCustom;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+public class CategoryDynamicQuery {
 
-@Document(collection = "Category")
-public class Category {
-    @Id
-    private long id;
     private String name;
     private int sunlight;
     private int water_amount;
 
-    protected Category() {
-
-    }
-
-    public Category(long id, String name, int sunlight, int water_amount) {
-        this.id = id;
+    public CategoryDynamicQuery(String name, int sunlight, int water_amount) {
         this.name = name;
         this.sunlight = sunlight;
         this.water_amount = water_amount;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {

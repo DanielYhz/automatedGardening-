@@ -1,7 +1,9 @@
 package cmpe273.group6.Controller;
 
 import cmpe273.group6.Entity.Area;
+import cmpe273.group6.Entity.Category;
 import cmpe273.group6.Service.AreaRepository;
+import cmpe273.group6.Service.CategoryRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -12,9 +14,14 @@ public class AreaController {
 
     private AreaRepository areaRepository;
 
-    public AreaController(AreaRepository areaRepository) {
+    private CategoryRepository categoryRepository;
+
+    public AreaController(AreaRepository areaRepository, CategoryRepository categoryRepository) {
+
         this.areaRepository = areaRepository;
+        this.categoryRepository = categoryRepository;
     }
+
 
     @GetMapping("/all")
     public List<Area> getAll() {
@@ -71,7 +78,18 @@ public class AreaController {
                 area.getPlant_num().put(map.get("plant_category"), Integer.parseInt(map.get("plant_num")));
             }
         }
+
+        // since we will only update one category at a time. there will be only one type of plant added here.
+        if (categoryRepository.findCategoryByNameIs(map.get("plant_category")) == null) {
+            return "No such category in the database. Please add first.";
+        } else {
+            Category category = categoryRepository.findCategoryByNameIs(map.get("plant_category"));
+            area.setSunlight_threshold(area.getSunlight_threshold() + category.getSunlight() * Integer.parseInt(map.get("plant_num")));
+            area.setWater_threshold(area.getWater_threshold() + category.getWater_amount() * Integer.parseInt(map.get("plant_num")));
+        }
         this.areaRepository.save(area);
         return "Information updated on the Area " + areaId + " succeed.";
     }
+
+    
 }

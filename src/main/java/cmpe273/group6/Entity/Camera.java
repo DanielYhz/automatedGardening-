@@ -6,25 +6,25 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Camera")
 public class Camera {
     @Id
-    private String id;
+    private long id;
     private int access_mode;
-    private boolean state;
+    private int state;
 
     protected Camera() {
 
     }
 
-    public Camera(String id, int access_mode) {
+    public Camera(long id, int access_mode) {
         this.id = id;
         this.access_mode = access_mode;
-        this.state = true;
+        this.state = 1;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -36,11 +36,11 @@ public class Camera {
         this.access_mode = access_mode;
     }
 
-    public boolean isState() {
+    public int isState() {
         return state;
     }
 
-    public void setState(boolean state) {
+    public void setState(int state) {
         this.state = state;
     }
 }

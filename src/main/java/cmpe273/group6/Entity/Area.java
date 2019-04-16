@@ -17,6 +17,10 @@ public class Area {
     private long sprinkler;
     private long camera;
     private long sensor;
+    private int  water_threshold;
+    private int  sunlight_threshold;
+    private int  water_cur;
+    private int  sunlight_cur;
 
     protected Area() {
         this.plant_num = new HashMap<>();
@@ -61,5 +65,37 @@ public class Area {
 
     public void setSensor(long sensor) {
         this.sensor = sensor;
+    }
+
+    public int getWater_threshold() {
+        return water_threshold;
+    }
+
+    public void setWater_threshold(int water_threshold) {
+        this.water_threshold = water_threshold;
+    }
+
+    public int getSunlight_threshold() {
+        return sunlight_threshold;
+    }
+
+    public void setSunlight_threshold(int sunlight_threshold) {
+        this.sunlight_threshold = sunlight_threshold;
+    }
+
+    public int getWater_cur() {
+        return water_cur;
+    }
+
+    public void setWater_cur(int water_cur) {
+        this.water_cur = water_cur;
+    }
+
+    public int getSunlgiht_cur() {
+        return sunlight_cur;
+    }
+
+    public void setSunlgiht_cur(int sunlgiht_cur) {
+        this.sunlight_cur = sunlgiht_cur;
     }
 }
