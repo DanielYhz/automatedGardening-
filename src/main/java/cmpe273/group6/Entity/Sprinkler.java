@@ -10,17 +10,19 @@ public class Sprinkler {
     private long id;
     private Time schedule_start;
     private Time schedule_end;
-    private boolean state;
+    private int state;
+    private int access_mode;
+    private int observe;
 
     protected Sprinkler() {
 
     }
 
-    public Sprinkler(long id, Time schedule_start, Time schedule_end) {
+    public Sprinkler(long id) {
         this.id = id;
-        this.schedule_end = schedule_end;
-        this.schedule_start = schedule_start;
-        this.state = true;
+        this.state = 1;
+        this.access_mode = 2;
+        this.observe = 0;
     }
 
     public long getId() {
@@ -47,7 +49,27 @@ public class Sprinkler {
         this.schedule_end = schedule_end;
     }
 
-    public boolean isState() {
-        return this.state;
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getAccess_mode() {
+        return access_mode;
+    }
+
+    public void setAccess_mode(int access_mode) {
+        this.access_mode = access_mode;
+    }
+
+    public int getObeserve() {
+        return observe;
+    }
+
+    public void setObeserve(int obeserve) {
+        this.observe = obeserve;
     }
 }

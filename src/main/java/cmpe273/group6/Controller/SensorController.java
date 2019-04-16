@@ -80,7 +80,7 @@ public class SensorController {
         }
 
         if (map.containsKey("state")) {
-            sensor.setState(Boolean.parseBoolean(map.get("state")));
+            sensor.setState(Integer.parseInt(map.get("state")));
         }
 
         if (map.containsKey("access_mode")) {
@@ -100,7 +100,7 @@ public class SensorController {
 
         Sensor sensor = sensorRepository.findSensorById(sensorId);
         if (map.containsKey("observe")) {
-            sensor.setObserve(Boolean.parseBoolean(map.get("observe")));
+            sensor.setObserve(Integer.parseInt(map.get("observe")));
         }
         this.sensorRepository.save(sensor);
         if (Boolean.parseBoolean(map.get("observe"))) {

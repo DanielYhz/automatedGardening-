@@ -2,8 +2,11 @@ package cmpe273.group6.Controller;
 
 import cmpe273.group6.Entity.Area;
 import cmpe273.group6.Entity.Category;
+import cmpe273.group6.Entity.Sprinkler;
 import cmpe273.group6.Service.AreaRepository;
 import cmpe273.group6.Service.CategoryRepository;
+import cmpe273.group6.Service.SensorRepository;
+import cmpe273.group6.Service.SprinklerRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -16,10 +19,16 @@ public class AreaController {
 
     private CategoryRepository categoryRepository;
 
-    public AreaController(AreaRepository areaRepository, CategoryRepository categoryRepository) {
+    private SensorRepository sensorRepository;
+
+    private SprinklerRepository sprinklerRepository;
+
+    public AreaController(AreaRepository areaRepository, CategoryRepository categoryRepository, SensorRepository sensorRepository, SprinklerRepository sprinklerRepository) {
 
         this.areaRepository = areaRepository;
         this.categoryRepository = categoryRepository;
+        this.sensorRepository = sensorRepository;
+        this.sprinklerRepository = sprinklerRepository;
     }
 
 
@@ -91,5 +100,34 @@ public class AreaController {
         return "Information updated on the Area " + areaId + " succeed.";
     }
 
-    
+    @PostMapping("/check/{id}")
+    public String checkArea(@PathVariable(value = "id") long sensorId, @RequestBody Map<String, String> map) {
+
+        if (sensorRepository.findSensorById(sensorId) == null) {
+            return "The sensor is not being registered.";
+        } else if (areaRepository.findAreaBySensorIs(sensorId) == null) {
+            return "The sensor is not being added to any area.";
+        } else {
+            Area area = areaRepository.findAreaBySensorIs(sensorId);
+            if (map.containsKey("water_received")) {
+                area.setWater_cur(Integer.parseInt(map.get("water_received")));
+            }
+            if (map.containsKey("sunlight")) {
+                area.setSunlgiht_cur(Integer.parseInt(map.get("sunlight")));
+            }
+            // if water received in the plant is enough, turn off the sprinkler.
+            // set the sprinkler to turn off.
+            if (area.getWater_cur() >= area.getWater_threshold()) {
+                if (sprinklerRepository.findSprinklerById(area.getSprinkler()) == null) {
+                    return "There is no sprinkler in this area.";
+                }
+                Sprinkler sprinkler = sprinklerRepository.findSprinklerById(area.getSprinkler());
+                sprinkler.setState(0);
+                sprinklerRepository.save(sprinkler);
+                return "Sprinkler turned off. " + sprinkler.getId();
+            } else {
+                return "water still needed";
+            }
+        }
+    }
 }

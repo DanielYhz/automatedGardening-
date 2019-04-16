@@ -8,8 +8,8 @@ public class Sensor {
     @Id
     private long id;
     private int access_mode;
-    private boolean state;
-    private boolean observe;
+    private int state;
+    private int observe;
 
     protected Sensor() {
 
@@ -21,8 +21,8 @@ public class Sensor {
         // Access Mode: 0 for read, 1 for write, 2 for read and write.
         // Default is 2;
         this.access_mode = 2;
-        this.state = true;
-        this.observe = false;
+        this.state = 1;
+        this.observe = 0;
     }
 
     public long getId() {
@@ -41,23 +41,19 @@ public class Sensor {
         this.access_mode = access_mode;
     }
 
-    public boolean isState() {
-        return this.state;
+    public int getState() {
+        return state;
     }
 
-    public void setState(boolean state) {
+    public void setState(int state) {
         this.state = state;
     }
 
-    public boolean getState() {
-        return this.state;
-    }
-
-    public boolean isObserve() {
+    public int getObserve() {
         return observe;
     }
 
-    public void setObserve(boolean observe) {
+    public void setObserve(int observe) {
         this.observe = observe;
     }
 }

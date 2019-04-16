@@ -9,5 +9,5 @@ import java.util.*;
 @Repository
 public interface AreaRepository extends MongoRepository<Area,Long> {
      Area findAreaById(long id);
-
+     Area findAreaBySensorIs(long id);
 }
