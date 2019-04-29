@@ -36,7 +36,7 @@ public class Camera {
         this.access_mode = access_mode;
     }
 
-    public int isState() {
+    public int getState() {
         return state;
     }
 

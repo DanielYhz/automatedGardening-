@@ -1,8 +1,6 @@
 package cmpe273.group6.Controller;
 
-import cmpe273.group6.Entity.Area;
-import cmpe273.group6.Entity.Category;
-import cmpe273.group6.Entity.Sprinkler;
+import cmpe273.group6.Entity.*;
 import cmpe273.group6.Service.*;
 import cmpe273.group6.Service.CategoryRepositoryCustom.CategoryRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,6 +184,51 @@ public class AreaController {
             } else {
                 return "need more information";
             }
+        }
+    }
+
+    @GetMapping("/state/sprinkler/{id}")
+    public String areaSprinklerState(@PathVariable(value = "id") long areaId) {
+        if(areaRepository.findAreaById(areaId) == null) {
+            return "Area is not valid";
+        }
+
+        Area area = areaRepository.findAreaById(areaId);
+        Sprinkler sprinkler = sprinklerRepository.findSprinklerById(area.getSprinkler());
+        if (sprinkler.getState() == 1) {
+            return "On";
+        } else {
+            return "Off";
+        }
+    }
+
+    @GetMapping("/state/sensor/{id}")
+    public String areaSensorState(@PathVariable(value = "id") long areaId) {
+        if(areaRepository.findAreaById(areaId) == null) {
+            return "Area is not valid";
+        }
+
+        Area area = areaRepository.findAreaById(areaId);
+        Sensor sensor = sensorRepository.findSensorById(area.getSensor());
+        if (sensor.getState() == 1) {
+            return "On";
+        } else {
+            return "Off";
+        }
+    }
+
+    @GetMapping("/state/camera/{id}")
+    public String areaCameraState(@PathVariable(value = "id") long areaId) {
+        if(areaRepository.findAreaById(areaId) == null) {
+            return "Area is not valid";
+        }
+
+        Area area = areaRepository.findAreaById(areaId);
+        Camera camera = cameraRepository.findCameraById(area.getCamera());
+        if (camera.getState() == 1) {
+            return "On";
+        } else {
+            return "Off";
         }
     }
 }
