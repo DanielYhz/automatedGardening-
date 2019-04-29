@@ -58,7 +58,7 @@ public class SensorController {
         Sensor sensor = new Sensor(id);
 
         sensorRepository.save(sensor);
-        return "Registration Complete";
+        return "Registration Complete " + id;
     }
 
     @PostMapping("/deregistration/{id}")

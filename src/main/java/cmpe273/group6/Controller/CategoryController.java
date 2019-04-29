@@ -22,8 +22,10 @@ public class CategoryController {
     }
 
     @PutMapping
-    public void insert(@RequestBody Category category) {
+    public String insert(@RequestBody Category category) {
+
         this.categoryRepository.insert(category);
+        return "Insert category " + category.getName() + " complete.";
     }
 
     @PostMapping

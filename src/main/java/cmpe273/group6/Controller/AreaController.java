@@ -4,6 +4,8 @@ import cmpe273.group6.Entity.Area;
 import cmpe273.group6.Entity.Category;
 import cmpe273.group6.Entity.Sprinkler;
 import cmpe273.group6.Service.*;
+import cmpe273.group6.Service.CategoryRepositoryCustom.CategoryRepositoryCustom;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -21,6 +23,11 @@ public class AreaController {
     private SprinklerRepository sprinklerRepository;
 
     private CameraRepository cameraRepository;
+
+    Set<Long> sensor_used = new HashSet<>();
+    Set<Long> sprinkler_used = new HashSet<>();
+    Set<Long> camera_used = new HashSet<>();
+
 
     public AreaController(AreaRepository areaRepository, CategoryRepository categoryRepository,
                           SensorRepository sensorRepository, SprinklerRepository sprinklerRepository, CameraRepository cameraRepository) {
@@ -69,15 +76,30 @@ public class AreaController {
 
         Area area = areaRepository.findAreaById(areaId);
         if (map.containsKey("sprinkler")) {
-            area.setSprinkler(Long.parseLong(map.get("sprinkler")));
+            if (sprinklerRepository.findSprinklerById(Long.parseLong(map.get("sprinkler"))) != null && !sprinkler_used.contains(Long.parseLong(map.get("sprinkler")))) {
+                area.setSprinkler(Long.parseLong(map.get("sprinkler")));
+                // sprinkler_used.add(Long.parseLong(map.get("sprinkler")));
+            } else {
+                return "Please Enter an valid sprinkler id";
+            }
         }
 
         if (map.containsKey("sensor")) {
-            area.setSensor(Long.parseLong(map.get("sensor")));
+            if (sensorRepository.findSensorById(Long.parseLong(map.get("sensor"))) != null && !sensor_used.contains(Long.parseLong(map.get("sensor")))) {
+                area.setSensor(Long.parseLong(map.get("sensor")));
+                // sensor_used.add(Long.parseLong(map.get("sensor")));
+            } else {
+                return "Please Enter an valid sensor id";
+            }
         }
 
         if (map.containsKey("camera")) {
-            area.setCamera(Long.parseLong(map.get("camera")));
+            if (cameraRepository.findCameraById(Long.parseLong(map.get("camera"))) != null && !camera_used.contains(Long.parseLong(map.get("camera")))) {
+                area.setCamera(Long.parseLong(map.get("camera")));
+                // camera_used.add(Long.parseLong(map.get("camera")));
+            } else {
+                return "Please Enter an valid camera id";
+            }
         }
 
         if (map.containsKey("plant_category")) {
@@ -97,6 +119,9 @@ public class AreaController {
             area.setWater_threshold(area.getWater_threshold() + category.getWater_amount() * Integer.parseInt(map.get("plant_num")));
         }
         this.areaRepository.save(area);
+        sprinkler_used.add(Long.parseLong(map.get("sprinkler")));
+        sensor_used.add(Long.parseLong(map.get("sensor")));
+        camera_used.add(Long.parseLong(map.get("camera")));
         return "Information updated on the Area " + areaId + " succeed.";
     }
 

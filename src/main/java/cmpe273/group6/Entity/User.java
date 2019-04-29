@@ -11,12 +11,12 @@ public class User {
     private String username;
     private String password;
     private int room_num;
-    private Boolean admin; 
+    private int admin;
 
     protected User() {
     }
 
-    public User(String username, String password, int room_num, Boolean admin) {
+    public User(String username, String password, int room_num, int admin) {
         this.username = username; 
         this.password = password;
         this.room_num = room_num;
@@ -51,11 +51,23 @@ public class User {
         this.room_num = room_num;
     }
 
-    public Boolean getAdmin() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getAdmin() {
         return admin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setAdmin(int admin) {
         this.admin = admin;
     }
 }
