@@ -42,6 +42,10 @@ public class SensorController {
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") long id) {
+        if (sensorRepository.findSensorById(id) == null) {
+            return "The device is not registered.";
+        }
+
         this.sensorRepository.delete(sensorRepository.findSensorById(id));
         return "Delete Succeed";
     }

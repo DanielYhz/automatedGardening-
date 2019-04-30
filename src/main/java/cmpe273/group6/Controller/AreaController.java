@@ -117,9 +117,15 @@ public class AreaController {
             area.setWater_threshold(area.getWater_threshold() + category.getWater_amount() * Integer.parseInt(map.get("plant_num")));
         }
         this.areaRepository.save(area);
-        sprinkler_used.add(Long.parseLong(map.get("sprinkler")));
-        sensor_used.add(Long.parseLong(map.get("sensor")));
-        camera_used.add(Long.parseLong(map.get("camera")));
+        if (map.containsKey("sprinkler")) {
+            sprinkler_used.add(Long.parseLong(map.get("sprinkler")));
+        }
+        if (map.containsKey("sensor")) {
+            sensor_used.add(Long.parseLong(map.get("sensor")));
+        }
+        if (map.containsKey("camera")) {
+            camera_used.add(Long.parseLong(map.get("camera")));
+        }
         return "Information updated on the Area " + areaId + " succeed.";
     }
 
@@ -138,6 +144,7 @@ public class AreaController {
             if (map.containsKey("sunlight")) {
                 area.setSunlgiht_cur(Integer.parseInt(map.get("sunlight")));
             }
+            areaRepository.save(area);
             // if water received in the plant is enough, turn off the sprinkler.
             // set the sprinkler to turn off.
             if (area.getWater_cur() >= area.getWater_threshold()) {
@@ -148,6 +155,14 @@ public class AreaController {
                 sprinkler.setState(0);
                 sprinklerRepository.save(sprinkler);
                 return "Sprinkler turned off. " + sprinkler.getId();
+            } else if (area.getWater_cur() == 0){
+                if (sprinklerRepository.findSprinklerById(area.getSprinkler()) == null) {
+                    return "There is no sprinkler in this area.";
+                }
+                Sprinkler sprinkler = sprinklerRepository.findSprinklerById(area.getSprinkler());
+                sprinkler.setState(1);
+                sprinklerRepository.save(sprinkler);
+                return "Sprinkler turned on. " + sprinkler.getId();
             } else {
                 return "water still needed";
             }
@@ -188,13 +203,12 @@ public class AreaController {
     }
 
     @GetMapping("/state/sprinkler/{id}")
-    public String areaSprinklerState(@PathVariable(value = "id") long areaId) {
-        if(areaRepository.findAreaById(areaId) == null) {
-            return "Area is not valid";
+    public String areaSprinklerState(@PathVariable(value = "id") long sprinklerId) {
+        if(sprinklerRepository.findSprinklerById(sprinklerId) == null) {
+            return "Sprinkler is not in the area";
         }
 
-        Area area = areaRepository.findAreaById(areaId);
-        Sprinkler sprinkler = sprinklerRepository.findSprinklerById(area.getSprinkler());
+        Sprinkler sprinkler = sprinklerRepository.findSprinklerById(sprinklerId);
         if (sprinkler.getState() == 1) {
             return "On";
         } else {
@@ -203,13 +217,12 @@ public class AreaController {
     }
 
     @GetMapping("/state/sensor/{id}")
-    public String areaSensorState(@PathVariable(value = "id") long areaId) {
-        if(areaRepository.findAreaById(areaId) == null) {
-            return "Area is not valid";
+    public String areaSensorState(@PathVariable(value = "id") long sensorId) {
+        if(sensorRepository.findSensorById(sensorId) == null) {
+            return "Sensor is not in the area";
         }
 
-        Area area = areaRepository.findAreaById(areaId);
-        Sensor sensor = sensorRepository.findSensorById(area.getSensor());
+        Sensor sensor = sensorRepository.findSensorById(sensorId);
         if (sensor.getState() == 1) {
             return "On";
         } else {
@@ -218,13 +231,12 @@ public class AreaController {
     }
 
     @GetMapping("/state/camera/{id}")
-    public String areaCameraState(@PathVariable(value = "id") long areaId) {
-        if(areaRepository.findAreaById(areaId) == null) {
-            return "Area is not valid";
+    public String areaCameraState(@PathVariable(value = "id") long cameraId) {
+        if(cameraRepository.findCameraById(cameraId) == null) {
+            return "Camera is not in the area";
         }
 
-        Area area = areaRepository.findAreaById(areaId);
-        Camera camera = cameraRepository.findCameraById(area.getCamera());
+        Camera camera = cameraRepository.findCameraById(cameraId);
         if (camera.getState() == 1) {
             return "On";
         } else {
